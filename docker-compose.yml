@@ -1,0 +1,14 @@
+services:
+  mirror-api:
+    build: .
+    container_name: mirror-api
+    restart: unless-stopped
+    environment:
+      ECOSYSTEM_SITE: "https://a393acb1-53c8-47b1-9720-92799236d5f1.dev.coze.site/"
+      ALLOWED_ORIGINS: "https://a393acb1-53c8-47b1-9720-92799236d5f1.dev.coze.site,http://localhost:3000"
+      # 可选：设置后，调用 /mirror* 必须带 x-api-key
+      MIRROR_API_KEY: ""
+      HOST: "0.0.0.0"
+      PORT: "8000"
+    ports:
+      - "8000:8000"
