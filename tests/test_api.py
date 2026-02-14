@@ -1,8 +1,23 @@
+import os
+
 from fastapi.testclient import TestClient
+
+# Ensure deterministic env before importing app
+os.environ.setdefault("ECOSYSTEM_SITE", "https://a393acb1-53c8-47b1-9720-92799236d5f1.dev.coze.site/")
+os.environ.setdefault("ALLOWED_ORIGINS", "https://a393acb1-53c8-47b1-9720-92799236d5f1.dev.coze.site")
+os.environ.pop("MIRROR_API_KEY", None)
 
 from main import app
 
 client = TestClient(app)
+
+
+def test_home() -> None:
+    res = client.get("/")
+    assert res.status_code == 200
+    body = res.json()
+    assert body["name"] == "Mirror API"
+    assert body["mirror"] == "/mirror"
 
 
 def test_health() -> None:

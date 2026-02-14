@@ -1,14 +1,42 @@
 from __future__ import annotations
 
+import os
 from typing import Any
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Header, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+APP_NAME = "Mirror API"
+APP_VERSION = "1.1.0"
+
+ECOSYSTEM_SITE = os.getenv("ECOSYSTEM_SITE", "https://a393acb1-53c8-47b1-9720-92799236d5f1.dev.coze.site/")
+MIRROR_API_KEY = os.getenv("MIRROR_API_KEY")
+
+
+def _split_allowed_origins(raw: str) -> list[str]:
+    return [origin.strip() for origin in raw.split(",") if origin.strip()]
+
+
+ALLOWED_ORIGINS = _split_allowed_origins(
+    os.getenv(
+        "ALLOWED_ORIGINS",
+        "https://a393acb1-53c8-47b1-9720-92799236d5f1.dev.coze.site,http://localhost:3000,http://127.0.0.1:3000",
+    )
+)
+
 app = FastAPI(
-    title="Mirror API",
-    version="1.0.0",
-    description="Return request details back to caller for debugging/integration tests.",
+    title=APP_NAME,
+    version=APP_VERSION,
+    description="Mirror incoming HTTP requests for debugging ecosystem integrations.",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -23,10 +51,6 @@ async def _build_mirror_payload(request: Request) -> dict[str, Any]:
         except Exception:
             json_body = None
 
-    query_params = dict(request.query_params)
-    path_params = dict(request.path_params)
-    headers = {k: v for k, v in request.headers.items()}
-
     return {
         "method": request.method,
         "path": request.url.path,
@@ -35,11 +59,30 @@ async def _build_mirror_payload(request: Request) -> dict[str, Any]:
         "host": request.url.hostname,
         "port": request.url.port,
         "client": request.client.host if request.client else None,
-        "query": query_params,
-        "path_params": path_params,
-        "headers": headers,
+        "query": dict(request.query_params),
+        "path_params": dict(request.path_params),
+        "headers": {k: v for k, v in request.headers.items()},
         "body_text": body_text,
         "body_json": json_body,
+    }
+
+
+def _verify_api_key(x_api_key: str | None) -> None:
+    if not MIRROR_API_KEY:
+        return
+    if x_api_key != MIRROR_API_KEY:
+        raise HTTPException(status_code=401, detail="Invalid x-api-key")
+
+
+@app.get("/")
+async def home() -> dict[str, Any]:
+    return {
+        "name": APP_NAME,
+        "version": APP_VERSION,
+        "ecosystem_site": ECOSYSTEM_SITE,
+        "docs": "/docs",
+        "health": "/health",
+        "mirror": "/mirror",
     }
 
 
@@ -49,8 +92,10 @@ async def health() -> dict[str, str]:
 
 
 @app.api_route("/mirror", methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"])
-async def mirror(request: Request) -> JSONResponse:
+async def mirror(request: Request, x_api_key: str | None = Header(default=None)) -> JSONResponse:
+    _verify_api_key(x_api_key)
     payload = await _build_mirror_payload(request)
+    payload["ecosystem_site"] = ECOSYSTEM_SITE
     return JSONResponse(payload)
 
 
@@ -58,7 +103,13 @@ async def mirror(request: Request) -> JSONResponse:
     "/mirror/{full_path:path}",
     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
 )
-async def mirror_with_path(full_path: str, request: Request) -> JSONResponse:
+async def mirror_with_path(
+    full_path: str,
+    request: Request,
+    x_api_key: str | None = Header(default=None),
+) -> JSONResponse:
+    _verify_api_key(x_api_key)
     payload = await _build_mirror_payload(request)
     payload["mirrored_path"] = full_path
+    payload["ecosystem_site"] = ECOSYSTEM_SITE
     return JSONResponse(payload)
