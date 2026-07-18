@@ -1,0 +1,11 @@
+{
+  "name": "Fundfolio 支付宝基金看板",
+  "short_name": "Fundfolio",
+  "description": "随时查看基金资产、收益和持仓表现",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f4f1",
+  "theme_color": "#111214",
+  "orientation": "any",
+  "icons": [{ "src": "./icons/app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
