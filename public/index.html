@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f7f4">
+  <title>Aurum — Global Private Finance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&amp;family=Manrope:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Aurum home"><span class="brand-mark">A</span><span>AURUM</span></a>
+      <nav aria-label="Primary navigation">
+        <p class="nav-label">OVERVIEW</p>
+        <a class="nav-item active" href="#overview" data-page="overview"><span data-icon="grid"></span>Overview</a>
+        <a class="nav-item" href="#accounts"><span data-icon="wallet"></span>Accounts</a>
+        <a class="nav-item" href="#activity"><span data-icon="activity"></span>Activity</a>
+        <p class="nav-label">MONEY</p>
+        <a class="nav-item" href="#send"><span data-icon="send"></span>Send &amp; receive</a>
+        <a class="nav-item" href="#cards"><span data-icon="card"></span>Cards<span class="pill">3</span></a>
+        <a class="nav-item" href="#wealth"><span data-icon="chart"></span>Wealth</a>
+        <p class="nav-label">DISCOVER</p>
+        <a class="nav-item" href="#frontier"><span data-icon="sparkles"></span>Frontier Lab<span class="new-pill">NEW</span></a>
+      </nav>
+      <div class="concierge-card">
+        <span class="concierge-icon" data-icon="headset"></span>
+        <div><strong>Private concierge</strong><p>Available 24/7</p></div>
+        <button aria-label="Open concierge" data-toast="Your private concierge is ready.">↗</button>
+      </div>
+      <div class="side-footer"><a href="#settings"><span data-icon="settings"></span>Settings</a><a href="#help"><span data-icon="help"></span>Help center</a></div>
+    </aside>
+
+    <main>
+      <header>
+        <button class="mobile-menu" id="menuButton" aria-label="Open navigation"><span data-icon="menu"></span></button>
+        <div class="greeting"><p>GOOD MORNING</p><h1>Welcome back, Alex.</h1></div>
+        <div class="header-actions">
+          <button class="icon-button" aria-label="Search" data-icon="search"></button>
+          <button class="icon-button notification" aria-label="Notifications" data-icon="bell"><i></i></button>
+          <button class="profile"><span class="avatar">AM</span><span><strong>Alex Morgan</strong><small>Private Client</small></span><span data-icon="chevron"></span></button>
+        </div>
+      </header>
+
+      <section class="content" id="overview">
+        <div class="hero-grid">
+          <article class="balance-card">
+            <div class="balance-top"><span>Total portfolio value</span><button aria-label="Toggle balance visibility" id="eyeButton" data-icon="eye"></button></div>
+            <div class="balance-value" id="balanceValue">$248,650.82</div>
+            <div class="balance-change"><span>↗ 4.8%</span> this month</div>
+            <div class="balance-actions">
+              <button data-action="Add money"><span data-icon="plus"></span>Add money</button>
+              <button data-action="Send money"><span data-icon="arrow-up"></span>Send</button>
+              <button data-action="Request money"><span data-icon="arrow-down"></span>Request</button>
+              <button data-action="Exchange currency"><span data-icon="exchange"></span>Exchange</button>
+            </div>
+            <div class="balance-orbit orbit-one"></div><div class="balance-orbit orbit-two"></div>
+          </article>
+
+          <article class="insight-card">
+            <div class="eyebrow"><span data-icon="sparkles"></span>AURUM INSIGHT</div>
+            <h2>Your money, working globally.</h2>
+            <p>Move idle USD into a flexible 4.75% APY reserve. Withdraw anytime.</p>
+            <div class="insight-bottom"><button data-toast="Opening your personalized yield plan…">View opportunity <span>→</span></button><div class="mini-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          </article>
+        </div>
+
+        <div class="section-heading"><div><p>GLOBAL ACCOUNTS</p><h2>Your money, without borders</h2></div><button class="text-button" data-toast="All global accounts loaded.">View all <span>→</span></button></div>
+        <div class="account-grid" id="accountGrid"><div class="loading">Loading accounts…</div></div>
+
+        <div class="lower-grid">
+          <section class="panel transactions">
+            <div class="panel-title"><div><p>RECENT ACTIVITY</p><h2>Transactions</h2></div><button class="filter-button" data-toast="Filters are ready."><span data-icon="filter"></span>Filter</button></div>
+            <div id="transactionList" class="transaction-list"><div class="loading">Loading activity…</div></div>
+            <button class="full-link" data-toast="Your full activity is up to date.">View all transactions <span>→</span></button>
+          </section>
+
+          <section class="panel frontier" id="frontier">
+            <div class="panel-title"><div><p>FRONTIER LAB</p><h2>12 ways to move forward</h2></div><span class="live-dot">12 LIVE</span></div>
+            <div class="innovation-grid">
+              <button data-toast="Cross-border liquidity opened."><span class="innovation-icon mint" data-icon="globe"></span><strong>Global Liquidity</strong><small>Instant multi-market settlement</small></button>
+              <button data-toast="Private credit marketplace opened."><span class="innovation-icon peach" data-icon="landmark"></span><strong>Private Credit</strong><small>Curated institutional access</small></button>
+              <button data-toast="AI treasury optimizer opened."><span class="innovation-icon violet" data-icon="brain"></span><strong>AI Treasury</strong><small>Always-on cash optimization</small></button>
+              <button data-toast="Carbon assets opened."><span class="innovation-icon green" data-icon="leaf"></span><strong>Carbon Assets</strong><small>Verified climate portfolios</small></button>
+              <button data-toast="Family vault opened."><span class="innovation-icon blue" data-icon="users"></span><strong>Family Vault</strong><small>Generational money controls</small></button>
+              <button data-toast="Tokenized assets opened."><span class="innovation-icon gold" data-icon="diamond"></span><strong>Tokenized Assets</strong><small>Fractional real-world value</small></button>
+              <button data-toast="Global protection opened."><span class="innovation-icon rose" data-icon="shield"></span><strong>Global Protect</strong><small>Adaptive travel coverage</small></button>
+              <button data-toast="Impact portfolios opened."><span class="innovation-icon green" data-icon="heart"></span><strong>Impact Circle</strong><small>Purpose-led investments</small></button>
+              <button data-toast="Founder network opened."><span class="innovation-icon blue" data-icon="rocket"></span><strong>Founder Network</strong><small>Private venture syndicates</small></button>
+              <button data-toast="Digital escrow opened."><span class="innovation-icon violet" data-icon="lock"></span><strong>Smart Escrow</strong><small>Programmable trust rails</small></button>
+              <button data-toast="FX autopilot opened."><span class="innovation-icon mint" data-icon="repeat"></span><strong>FX Autopilot</strong><small>Rule-based currency hedging</small></button>
+              <button data-toast="Legacy planning opened."><span class="innovation-icon gold" data-icon="key"></span><strong>Legacy Plan</strong><small>Secure digital succession</small></button>
+            </div>
+          </section>
+        </div>
+        <footer><span>Bank-grade encryption · SOC 2 architecture</span><span>USD/CNY indicative rate 7.24 · Updated just now</span></footer>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
